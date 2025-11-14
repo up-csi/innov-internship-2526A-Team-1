@@ -34,7 +34,7 @@ function shadeKeyBoard(letter, color) {
 }
 
 function deleteLetter() {
-    if (nextLetter == 0){
+    if (nextLetter === 0) {
         return;
     }
     nextLetter -= 1;
