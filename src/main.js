@@ -3,7 +3,7 @@ const WORD_LENGTH = 5;
 let guessesRemaining = NUMBER_OF_GUESSES;
 let currentGuess = [];
 let nextLetter = 0;
-const rightGuessString = "innov";
+const rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
 
 function initBoard() {
     const board = document.getElementById('game-board');
@@ -24,7 +24,7 @@ function initBoard() {
 
 function shadeKeyBoard(letter, color) {
     for (const elem of document.getElementsByClassName('keyboard-button')) {
-        if (elem.textContent === letter ) {
+        if (elem.textContent === letter) {
             elem.style.backgroundColor = color;
             break;
         }
@@ -58,16 +58,15 @@ function checkGuess() {
 
         const letterPosition = rightGuessCopy.indexOf(currentGuess[i]);
         // is letter in the correct guess
-        if (letterPosition === -1){
+        if (letterPosition === -1) {
             letterColor = 'grey';
         } else if (currentGuess[i] === rightGuess[i]) {
             letterColor = 'green';
         } else {
             letterColor = 'yellow';
-        } 
-        
+        }
+
         rightGuessCopy[letterPosition] = '_';
-        
 
         const delay = 50 * i;
         setTimeout(() => {
@@ -101,7 +100,7 @@ function insertLetter(pressedKey) {
     }
     pressedKey = pressedKey.toLowerCase();
 
-    const row = document.getElementsByClassName("letter-row")[6 - guessesRemaining];
+    const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining];
     const box = row.children[nextLetter];
     box.textContent = pressedKey;
     box.classList.add('filled-box');
