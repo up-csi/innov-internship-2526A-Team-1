@@ -59,6 +59,11 @@ function checkGuess() {
         return;
     }
 
+    if (!WORDS.includes(guessString)) {
+        alert('Not an English word!');
+        return;
+    }
+
     for (let i = 0; i < WORD_LENGTH; i++) {
         let letterColor = '';
         const box = row.children[i];
