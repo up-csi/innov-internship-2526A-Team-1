@@ -1,3 +1,5 @@
+import { WORDS } from './words.js';
+
 const NUMBER_OF_GUESSES = 6;
 const WORD_LENGTH = 5;
 let guessesRemaining = NUMBER_OF_GUESSES;
