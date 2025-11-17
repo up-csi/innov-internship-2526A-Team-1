@@ -82,7 +82,7 @@ function checkGuess() {
     }
 
     if (guessString === rightGuessString) {
-        if (guessesRemaining === 1) {
+        if (guessesRemaining >= 1) {
             guessesRemaining = 0;
         }
         setTimeout(() => {
