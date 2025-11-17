@@ -87,12 +87,14 @@ function checkGuess() {
     }
 
     if (guessString === rightGuessString) {
-        if (guessesRemaining === 1) {
+        if (guessesRemaining >= 1) {
             guessesRemaining = 0;
-        } else {
-            alert('You guessed right! Game over!');
-            return;
         }
+        setTimeout(() => {
+            alert('You guessed right! Game over!');
+        }, 260);
+
+        return;
     }
 
     guessesRemaining -= 1;
@@ -100,8 +102,10 @@ function checkGuess() {
     nextLetter = 0;
 
     if (guessesRemaining <= 0) {
-        alert("You've run out of guesses! Game over!");
-        alert(`The right word was: "${rightGuessString}"`);
+        setTimeout(() => {
+            alert("You've run out of guesses! Game over!");
+            alert(`The right word was: "${rightGuessString}"`);
+        }, 260);
     }
 }
 
