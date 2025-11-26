@@ -49,6 +49,7 @@ function checkGuess() {
     const row = document.getElementsByClassName('letter-row')[6 - guessesRemaining];
     let guessString = '';
     const rightGuess = Array.from(rightGuessString);
+    const rightGuessCopy = Array.from(rightGuessString);
 
     for (const val of currentGuess) {
         guessString += val;
@@ -69,7 +70,7 @@ function checkGuess() {
         const box = row.children[i];
         const letter = currentGuess[i];
 
-        const letterPosition = rightGuess.indexOf(currentGuess[i]);
+        const letterPosition = rightGuessCopy.indexOf(currentGuess[i]);
         // is letter in the correct guess
         if (letterPosition === -1) {
             letterColor = 'grey';
@@ -78,6 +79,8 @@ function checkGuess() {
         } else {
             letterColor = 'yellow';
         }
+
+        rightGuessCopy[letterPosition] = '_';
 
         const delay = 50 * i;
         setTimeout(() => {
