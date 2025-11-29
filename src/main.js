@@ -1,11 +1,25 @@
 import { WORDS } from './words.js';
+import { ALPHABET } from './alphabet.js';
+
+function generateRandomFiveLetters(){
+    var word;
+    do {
+        word = '';
+        for (var i = 0; i < 5; i++){
+            word += ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+        }
+    }while (word in WORDS);
+
+    return word;
+}
 
 const NUMBER_OF_GUESSES = 6;
 const WORD_LENGTH = 5;
 let guessesRemaining = NUMBER_OF_GUESSES;
 let currentGuess = [];
 let nextLetter = 0;
-const rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
+const rightGuessString = generateRandomFiveLetters();
+console.log(rightGuessString);
 
 function initBoard() {
     const board = document.getElementById('game-board');
@@ -60,10 +74,10 @@ function checkGuess() {
         return;
     }
 
-    if (!WORDS.includes(guessString)) {
+    /* if (!WORDS.includes(guessString)) {
         alert('Not an English word!');
         return;
-    }
+    } */
 
     for (let i = 0; i < WORD_LENGTH; i++) {
         let letterColor = '';
