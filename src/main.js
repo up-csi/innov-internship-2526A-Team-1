@@ -7,6 +7,12 @@ let currentGuess = [];
 let nextLetter = 0;
 const rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)];
 
+// Defined constants for animation timing
+const CHRISTMAS_LIGHTS_DELAY = 500;
+const JUDGE_DISPLAY_DELAY = 250;
+
+const ALL_DELAYS = CHRISTMAS_LIGHTS_DELAY + JUDGE_DISPLAY_DELAY;
+
 function initBoard() {
     const board = document.getElementById('game-board');
 
@@ -65,29 +71,33 @@ function checkGuess() {
         return;
     }
 
-    for (let i = 0; i < WORD_LENGTH; i++) {
-        let letterColor = '';
-        const box = row.children[i];
-        const letter = currentGuess[i];
+    christmasLights(row, true);
 
-        const letterPosition = rightGuessCopy.indexOf(currentGuess[i]);
-        // is letter in the correct guess
-        if (letterPosition === -1) {
-            letterColor = 'grey';
-        } else if (currentGuess[i] === rightGuess[i]) {
-            letterColor = 'green';
-        } else {
-            letterColor = 'yellow';
+    setTimeout(() => {
+        for (let i = 0; i < WORD_LENGTH; i++) {
+            let letterColor = '';
+            const box = row.children[i];
+            const letter = currentGuess[i];
+
+            const letterPosition = rightGuessCopy.indexOf(currentGuess[i]);
+            // is letter in the correct guess
+            if (letterPosition === -1) {
+                letterColor = 'grey';
+            } else if (currentGuess[i] === rightGuess[i]) {
+                letterColor = 'green';
+            } else {
+                letterColor = 'yellow';
+            }
+
+            rightGuessCopy[letterPosition] = '_';
+
+            const delay = 50 * i;
+            setTimeout(() => {
+                box.style.backgroundColor = letterColor;
+                shadeKeyBoard(letter, letterColor);
+            }, delay);
         }
-
-        rightGuessCopy[letterPosition] = '_';
-
-        const delay = 50 * i;
-        setTimeout(() => {
-            box.style.backgroundColor = letterColor;
-            shadeKeyBoard(letter, letterColor);
-        }, delay);
-    }
+    }, CHRISTMAS_LIGHTS_DELAY * 5);
 
     if (guessString === rightGuessString) {
         if (guessesRemaining >= 1) {
@@ -95,7 +105,7 @@ function checkGuess() {
         }
         setTimeout(() => {
             alert('You guessed right! Game over!');
-        }, 260);
+        }, ALL_DELAYS + 10);
 
         return;
     }
@@ -108,7 +118,7 @@ function checkGuess() {
         setTimeout(() => {
             alert("You've run out of guesses! Game over!");
             alert(`The right word was: "${rightGuessString}"`);
-        }, 260);
+        }, ALL_DELAYS + 10);
     }
 }
 
@@ -124,6 +134,39 @@ function insertLetter(pressedKey) {
     box.classList.add('filled-box');
     currentGuess.push(pressedKey);
     nextLetter += 1;
+}
+
+/**
+ * Plays a christmas lights animation. Calls itself recursively 5 times.
+ * @param {HTMLCollectionOf} row - The current guess row.
+ * @param {boolean} cycle_flag - Determines if the alternating pattern starts on box 0 or box 1
+ * @param {number} times_called - Indicates how many cycles of the animation have run
+ * @returns Nothing.
+ */
+function christmasLights(row) {
+    let cycle_flag = true;
+    for (let counter = 0; counter <= 5; counter++) {
+        setTimeout(() => {
+            for (let i = 0; i < WORD_LENGTH; i++) {
+                const box = row.children[i];
+
+                if (cycle_flag) {
+                    // animation starts on first element
+                    if (i % 2 === 0) {
+                        box.style.backgroundColor = 'red';
+                    } else {
+                        box.style.backgroundColor = 'green';
+                    }
+                } else if (i % 2 === 0) {
+                    box.style.backgroundColor = 'green';
+                } else {
+                    box.style.backgroundColor = 'red';
+                }
+            }
+
+            cycle_flag = !cycle_flag;
+        }, CHRISTMAS_LIGHTS_DELAY * counter);
+    }
 }
 
 document.addEventListener('keyup', e => {
