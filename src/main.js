@@ -157,10 +157,11 @@ function christmasLights(row) {
                     } else {
                         box.style.backgroundColor = 'green';
                     }
-                } else if (i % 2 === 0) { //I don't like the way this looks, but the formatter forced it
-                        box.style.backgroundColor = 'green';
+                } else if (i % 2 === 0) {
+                    //I don't like the way this looks, but the formatter forced it
+                    box.style.backgroundColor = 'green';
                 } else {
-                        box.style.backgroundColor = 'red';
+                    box.style.backgroundColor = 'red';
                 }
             }
 
